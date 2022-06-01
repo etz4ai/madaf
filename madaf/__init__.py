@@ -18,3 +18,7 @@ class Madaf:
         if value is None:
             raise KeyError(key)
         return msgpack.unpackb(value)
+
+    def __delitem__(self, key: str):
+        with self.db.begin(write=True) as txn:
+            txn.delete(key.encode("utf-8"))
